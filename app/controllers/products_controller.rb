@@ -12,7 +12,6 @@ class ProductsController < ApplicationController
 
   def new
     @product = current_user.products.build
-    # IMPORTANT : On prépare l'objet image_description vide pour le formulaire
     @product.build_image_description
   end
 
@@ -55,10 +54,6 @@ class ProductsController < ApplicationController
 
     def product_params
       # On modifie les paramètres pour accepter la structure imbriquée
-      params.expect(product: [ 
-        :name, 
-        :description, 
-        image_description_attributes: [ :attachment, :id ] 
-      ])
+      params.expect(product: [ :name, :description, image_description_attributes: [:id, :attachment] ])
     end
 end
