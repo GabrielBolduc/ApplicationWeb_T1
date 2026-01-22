@@ -24,6 +24,7 @@
 
   <body>
     <div>
+      <%= link_to "Home", root_path %>
       <% if user_signed_in? %>
         <strong><%= current_user.email %></strong>
         <%= button_to "Se déconnecter", destroy_user_session_path, method: :delete %>

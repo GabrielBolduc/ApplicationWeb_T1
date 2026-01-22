@@ -1,6 +1,7 @@
 class ProductsController < ApplicationController
-  before_action :set_product, only: %i[ show edit update destroy ]
   before_action :authenticate_user!, except: %i[index show]
+  before_action :set_user_product, only: %i[edit update destroy]
+  before_action :set_product, only: %i[show]
 
   def index
     @products = Product.all
@@ -10,11 +11,12 @@ class ProductsController < ApplicationController
   end
 
   def new
-    @product = Product.new
+    @product = current_user.products.build
   end
 
   def create
-    @product = Product.new(product_params)
+    @product = current_user.products.build(product_params)
+
     if @product.save
       redirect_to @product
     else
@@ -41,6 +43,11 @@ class ProductsController < ApplicationController
   private
     def set_product
       @product = Product.find(params[:id])
+    end
+    
+    def set_user_product
+      @product = current_user.products.find_by(id: params[:id])
+      redirect_to products_path, alert: "Action non autorisée." if @product.nil?
     end
 
     def product_params
