@@ -12,19 +12,22 @@ class ProductsController < ApplicationController
 
   def new
     @product = current_user.products.build
+    # IMPORTANT : On prépare l'objet image_description vide pour le formulaire
+    @product.build_image_description
   end
 
   def create
     @product = current_user.products.build(product_params)
 
     if @product.save
-      redirect_to @product
+      redirect_to @product, notice: "Produit créé avec succès."
     else
       render :new, status: :unprocessable_entity
     end
   end
 
   def edit
+    @product.build_image_description unless @product.image_description
   end
 
   def update
@@ -37,20 +40,25 @@ class ProductsController < ApplicationController
 
   def destroy
     @product.destroy
-    redirect_to products_path
+    redirect_to products_path, notice: "Produit supprimé."
   end
 
   private
     def set_product
       @product = Product.find(params[:id])
     end
-    
+
     def set_user_product
       @product = current_user.products.find_by(id: params[:id])
-      redirect_to products_path, alert: "Action non autorisée." if @product.nil?
+      redirect_to products_path, alert: "Non autorisé" if @product.nil?
     end
 
     def product_params
-      params.expect(product: [ :name, :description, :featured_image ])
+      # On modifie les paramètres pour accepter la structure imbriquée
+      params.expect(product: [ 
+        :name, 
+        :description, 
+        image_description_attributes: [ :attachment, :id ] 
+      ])
     end
 end

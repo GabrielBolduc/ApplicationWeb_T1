@@ -1,10 +1,11 @@
-
 <% cache @product do %>
   <h1><%= @product.name %></h1>
   <%= @product.description %>
 <% end %>
 
-<%= image_tag @product.featured_image if @product.featured_image.attached? %>
+<% if @product.image_description&.attachment&.attached? %>
+  <%= image_tag @product.image_description.attachment %>
+<% end %>
 
 <%= link_to "Back", products_path %>
 
