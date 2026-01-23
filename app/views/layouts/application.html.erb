@@ -23,17 +23,24 @@
   </head>
 
   <body>
-    <div>
-      <%= link_to "Home", root_path %>
-      <% if user_signed_in? %>
-        <strong><%= current_user.email %></strong>
-        <%= button_to "Se déconnecter", destroy_user_session_path, method: :delete %>
-      <% else %>
-        <%= link_to "S'inscrire", new_user_registration_path %> | 
-        <%= link_to "Se connecter", new_user_session_path %>
-      <% end %>
-    </div>
+    <body style="max-width: 800px; margin: 0 auto; padding: 20px; font-family: sans-serif;">
+    
+    <nav style="border-bottom: 1px solid #ccc; padding-bottom: 10px; margin-bottom: 20px; display: flex; justify-content: space-between;">
+      <div>
+        <%= link_to "Accueil",root_path %>
+      </div>
 
+      <div>
+        <% if user_signed_in? %>
+          <span><%= current_user.email %></span>
+          <%= button_to "Se deconnecter", destroy_user_session_path, method: :delete, style: "background: none; border: none; color: blue; text-decoration: underline; cursor: pointer;" %>
+        <% else %>
+          <%= link_to "S'inscrire", new_user_registration_path %> |
+          <%= link_to "Se connecter", new_user_session_path %>
+        <% end %>
+      </div>
+    </nav>
     <%= yield %>
+  </body>
   </body>
 </html>

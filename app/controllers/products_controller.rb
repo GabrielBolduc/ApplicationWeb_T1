@@ -19,8 +19,9 @@ class ProductsController < ApplicationController
     @product = current_user.products.build(product_params)
 
     if @product.save
-      redirect_to @product, notice: "Produit créé avec succès."
+      redirect_to @product
     else
+      @product.build_image_description unless @product.image_description
       render :new, status: :unprocessable_entity
     end
   end

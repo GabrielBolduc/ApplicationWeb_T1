@@ -1,15 +1,23 @@
 <% cache @product do %>
-  <h1><%= @product.name %></h1>
-  <%= @product.description %>
+  <h1 style="border-bottom: 1px solid #eee; padding-bottom: 10px;"><%= @product.name %></h1>
+
+  <% if @product.image_description&.attachment&.attached? %>
+    <div style="margin: 20px 0;">
+      <%= image_tag @product.image_description.attachment, style: "max-width: 300px; height: auto; border: 1px solid #ddd; padding: 5px;" %>
+    </div>
+  <% end %>
+
+  <div style="margin-bottom: 30px; line-height: 1.6;">
+    <%= @product.description %>
+  </div>
 <% end %>
 
-<% if @product.image_description&.attachment&.attached? %>
-  <%= image_tag @product.image_description.attachment %>
-<% end %>
+<div style="border-top: 1px solid #eee; padding-top: 20px; display: flex; gap: 15px; align-items: center;">
+  
+  <%= link_to "Retour", root_path %>
 
-<%= link_to "Back", products_path %>
-
-<% if user_signed_in? %>
-  <%= link_to "Edit", edit_product_path(@product) %>
-  <%= button_to "Delete", @product, method: :delete, data: { turbo_confirm: "Are you sure?" } %>
-<% end %>
+  <% if user_signed_in? && current_user.id == @product.user_id %>
+    <%= link_to "Modifier", edit_product_path(@product) %>
+    <%= button_to "Supprimer", @product, method: :delete, data: { turbo_confirm: "Etes-vous sur ?" }, style: "border: 1px solid; padding: 5px 10px;" %>
+  <% end %>
+</div>
