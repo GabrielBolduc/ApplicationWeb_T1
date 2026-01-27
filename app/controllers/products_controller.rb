@@ -40,7 +40,7 @@ class ProductsController < ApplicationController
 
   def destroy
     @product.destroy
-    redirect_to products_path, notice: "Produit supprimé."
+    redirect_to products_path
   end
 
   private
@@ -54,7 +54,6 @@ class ProductsController < ApplicationController
     end
 
     def product_params
-      # On modifie les paramètres pour accepter la structure imbriquée
-      params.expect(product: [ :name, :description, image_description_attributes: [:id, :attachment] ])
+      params.expect(product: [ :name, :description, :inventory_count, image_description_attributes: [:id, :attachment] ])
     end
 end
