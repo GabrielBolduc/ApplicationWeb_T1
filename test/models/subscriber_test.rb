@@ -1,7 +1,9 @@
-require "test_helper"
+class Subscriber < ApplicationRecord
+  belongs_to :product
+  
+  # AJOUTEZ CETTE LIGNE 👇
+  generates_token_for :unsubscribe
 
-class SubscriberTest < ActiveSupport::TestCase
-  # test "the truth" do
-  #   assert true
-  # end
+  # (Vos autres validations éventuelles...)
+  # validates :email, presence: true...
 end

@@ -1,5 +1,6 @@
 class SubscribersController < ApplicationController
-  allow_unauthenticated_access
+  skip_before_action :authenticate_user!, only: :create
+  
   before_action :set_product
 
   def create

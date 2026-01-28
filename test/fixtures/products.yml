@@ -1,11 +1,5 @@
-# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
-
-one:
-  name: MyString
-
-two:
-  name: MyString
-
+# test/fixtures/products.yml
 tshirt:
   name: T-Shirt
   inventory_count: 15
+  user: david  # <--- C'est la ligne magique qui corrige votre erreur SQL

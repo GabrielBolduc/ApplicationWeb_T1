@@ -60,5 +60,8 @@ group :test do
   # Use system testing [https://guides.rubyonrails.org/testing.html#system-testing]
   gem "capybara"
   gem "selenium-webdriver"
+
+  # AJOUTEZ CETTE LIGNE POUR CORRIGER L'ERREUR :
+  gem "minitest", "~> 5.0" 
 end
 gem 'devise'
