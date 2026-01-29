@@ -25,5 +25,4 @@ class Product < ApplicationRecord
       ProductMailer.with(product: self, subscriber: subscriber).in_stock.deliver_later
     end
   end
-
 end

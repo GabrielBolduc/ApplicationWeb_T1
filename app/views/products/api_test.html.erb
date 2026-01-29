@@ -1,0 +1,28 @@
+<h1>Test API</h1>
+
+<div data-controller="api">
+  
+    <div style="margin-bottom: 20px;">
+      <input type="text" data-api-target="nameInput" placeholder="Nom">
+      <input type="number" data-api-target="inventoryInput" placeholder="Quantité">
+      <input type="file" data-api-target="fileInput">
+      
+      <button data-action="click->api#createProduct">Ajouter</button>
+    </div>
+
+  <hr>
+
+  <div style="display: flex; gap: 50px;">
+    
+    <div>
+      <h3>Liste</h3>
+      <ul data-api-target="list"></ul>
+    </div>
+
+    <div>
+      <h3>Détail</h3>
+      <div data-api-target="detail"></div>
+    </div>
+
+  </div>
+</div>

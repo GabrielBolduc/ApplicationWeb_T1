@@ -1,5 +1,9 @@
-# test/fixtures/products.yml
-tshirt:
-  name: T-Shirt
-  inventory_count: 15
-  user: david  # <--- C'est la ligne magique qui corrige votre erreur SQL
+iphone:
+  name: "iPhone 15"
+  inventory_count: 10
+  user: one 
+
+macbook:
+  name: "MacBook Pro"
+  inventory_count: 5
+  user: one

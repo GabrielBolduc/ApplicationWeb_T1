@@ -2,14 +2,3 @@
 #   record: name_of_fixture (ClassOfFixture)
 #   name: content
 #   body: <p>In a <i>million</i> stars!</p>
-# test/fixtures/action_text/rich_texts.yml
-
-description_one:
-  name: description
-  body: "<div>Ceci est la description du produit 1</div>"
-  record: one (Product)
-
-description_two:
-  name: description
-  body: "<div>Ceci est la description du produit 2</div>"
-  record: two (Product)
