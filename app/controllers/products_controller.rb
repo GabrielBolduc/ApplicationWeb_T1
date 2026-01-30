@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class ProductsController < ApplicationController
   before_action :authenticate_user!, except: %i[index show]
   before_action :set_user_product, only: %i[edit update destroy]
@@ -5,6 +7,10 @@ class ProductsController < ApplicationController
 
   def index
     @products = Product.all
+
+    # Optimisation Cache HTTP (Brakeman aime l'optimisation)
+    return unless stale?(etag: @products, last_modified: @products.maximum(:updated_at))
+
     respond_to do |format|
       format.html
       format.json { render json: @products }
@@ -12,6 +18,8 @@ class ProductsController < ApplicationController
   end
 
   def show
+    return unless stale?(@product)
+
     respond_to do |format|
       format.html
       format.json { render json: @product }
@@ -28,11 +36,12 @@ class ProductsController < ApplicationController
 
     respond_to do |format|
       if @product.save
-        format.html { redirect_to @product, notice: "Produit créé avec succès." }
+        format.html { redirect_to @product, notice: "Créé avec succès." }
         format.json { render json: @product, status: :created }
       else
         @product.build_image_description unless @product.image_description
         format.html { render :new, status: :unprocessable_entity }
+        # test negatif
         format.json { render json: @product.errors, status: :unprocessable_entity }
       end
     end
@@ -45,10 +54,11 @@ class ProductsController < ApplicationController
   def update
     respond_to do |format|
       if @product.update(product_params)
-        format.html { redirect_to @product, notice: "Produit mis à jour." }
+        format.html { redirect_to @product, notice: "Mis à jour." }
         format.json { render json: @product, status: :ok }
       else
         format.html { render :edit, status: :unprocessable_entity }
+        # test nagatif
         format.json { render json: @product.errors, status: :unprocessable_entity }
       end
     end
@@ -57,25 +67,23 @@ class ProductsController < ApplicationController
   def destroy
     @product.destroy
     respond_to do |format|
-      format.html { redirect_to products_path, notice: "Produit supprimé." }
-      format.json { head :no_content } 
+      format.html { redirect_to products_path, notice: "Supprimé." }
+      format.json { head :no_content }
     end
-  end
-
-  def api_test
   end
 
   private
-    def set_product
-      @product = Product.find(params[:id])
-    end
 
-    def set_user_product
-      @product = current_user.products.find_by(id: params[:id])
-      redirect_to products_path, alert: "Non autorisé" if @product.nil?
-    end
+  def set_product
+    @product = Product.find(params[:id])
+  end
 
-    def product_params
-      params.expect(product: [ :name, :description, :inventory_count, image_description_attributes: [ :id, :attachment ] ])
-    end
+  def set_user_product
+    @product = current_user.products.find_by(id: params[:id])
+    redirect_to products_path, alert: "Non autorisé" if @product.nil?
+  end
+
+  def product_params
+    params.require(:product).permit(:name, :description, :inventory_count, image_description_attributes: %i[id attachment])
+  end
 end

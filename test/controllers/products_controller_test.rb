@@ -2,8 +2,8 @@ require "test_helper"
 
 class ProductsControllerTest < ActionDispatch::IntegrationTest
   setup do
-    @product = products(:tshirt) 
-    @user = users(:david)       
+    @product = products(:tshirt)
+    @user = users(:david)
   end
 
   test "should get index" do
@@ -17,7 +17,6 @@ class ProductsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should get new only if signed in" do
-
     get new_product_url
     assert_response :redirect
     assert_redirected_to new_user_session_url
@@ -30,14 +29,14 @@ class ProductsControllerTest < ActionDispatch::IntegrationTest
   test "should create product" do
     sign_in @user
     assert_difference("Product.count") do
-      post products_url, params: { 
-        product: { 
-          name: "Nouveau", 
+      post products_url, params: {
+        product: {
+          name: "Nouveau",
           inventory_count: 10,
           image_description_attributes: {
-            attachment: fixture_file_upload('icon.png', 'image/png')
+            attachment: fixture_file_upload("icon.png", "image/png")
           }
-        } 
+        }
       }
     end
 

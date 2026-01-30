@@ -1,9 +1,9 @@
-iphone:
-  name: "iPhone 15"
+ordinateur:
+  name: "Ordinateur"
   inventory_count: 10
   user: one 
 
-macbook:
-  name: "MacBook Pro"
+telephone:
+  name: "Telephone"
   inventory_count: 5
   user: one

@@ -8,9 +8,9 @@ class ProductMailerTest < ActionMailer::TestCase
     mail = ProductMailer.with(product: product, subscriber: subscriber).in_stock
 
     assert_equal "In stock", mail.subject
-    assert_equal [ "david@example.org" ], mail.to 
+    assert_equal [ "david@example.org" ], mail.to
     assert_equal [ "from@example.com" ], mail.from
-    
+
     assert_match "Good news", mail.body.encoded
     assert_match "T-Shirt", mail.body.encoded
   end

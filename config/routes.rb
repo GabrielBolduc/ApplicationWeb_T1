@@ -7,5 +7,5 @@ Rails.application.routes.draw do
   end
   resource :unsubscribe, only: [ :show ]
 
-  get 'api_test', to: 'products#api_test', as: :api_test
+  get "api_test", to: "products#api_test", as: :api_test
 end
