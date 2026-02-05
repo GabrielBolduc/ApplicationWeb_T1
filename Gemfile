@@ -62,6 +62,6 @@ group :test do
   gem "selenium-webdriver"
 
   # AJOUTEZ CETTE LIGNE POUR CORRIGER L'ERREUR :
-  gem "minitest", "~> 5.0"
+  gem "minitest", "~> 6.0"
 end
 gem "devise"
